@@ -7,8 +7,15 @@ import {Button} from 'antd';
 import { MailOutlined,GoogleOutlined } from '@ant-design/icons';
 import { signInWithEmailAndPassword,   signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import {Link} from "react-router-dom";
+import axios from 'axios';
 
-
+const createOrUpdateUser = async (authtoken) => {
+    return await axios.post(process.env.REACT_APP_AP, {}, {
+        headers: {
+            authtoken: authtoken,
+        }
+    })
+}
 
 const Login = () => {
 
@@ -30,17 +37,25 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
             try {
-             const result =  await signInWithEmailAndPassword(auth,email,password );
-            // console.log(result)
+            const result =  await signInWithEmailAndPassword(auth,email,password );            
             const {user} = result;
             const idTokenResult = user.getIdTokenResult();
 
-            dispatch({
-                type: "LOGGED_IN_USER",
-                payload: { email: user.email, token: idTokenResult.token }
-              });  
-              setLoading(false);
-            navigate("/");  
+            // sending the token to backend for validation
+            createOrUpdateUser(idTokenResult.token)
+            .then((res) => console.log("create or update response", res))
+            .catch();
+            
+            // saving user info to redux state
+            
+            // dispatch({
+            //     type: "LOGGED_IN_USER",
+            //     payload: { email: user.email, token: idTokenResult.token }
+            //   });  
+            //   setLoading(false);
+
+
+            // navigate("/");  
 
             } catch (error) {
               toast.error(error.message);
