@@ -11,10 +11,11 @@ import Register from './pages/auth/Register';
 import Header from './components/nav/Header';
 import RegisterComplete from './pages/auth/RegisterComplete';
 import ForgotPassword from "./pages/auth/ForgotPassword";
-
+import History from './pages/user/History';
+import UserRoute from './components/routes/UserRoute';
 import { auth } from './firebase';
 import { useDispatch } from 'react-redux';
-
+import { currentUser } from './functions/auth';
 
 
 const App = () => {
@@ -28,10 +29,25 @@ const App = () => {
 
         const idTokenResult = await user.getIdTokenResult();
         console.log("user", idTokenResult.token)
-        dispatch({
-          type: "LOGGED_IN_USER",
-          payload: { email: user.email, token: idTokenResult.token }
-        })
+
+        // sending the token to backend for validation
+        currentUser(idTokenResult.token)
+          .then((res) => {
+            // saving user info to redux state
+            dispatch({
+              type: "LOGGED_IN_USER",
+              payload: {
+                name: res.data.name,
+                email: res.data.email,
+                token: idTokenResult.token,
+                role: res.data.role,
+                _id: res.data.id
+              }
+            });
+
+          })
+          .catch();
+
       }
     })
     return () => unsubscribe();
@@ -50,7 +66,8 @@ const App = () => {
           <Route path="/register" exact element={<Register />} />
           <Route path="/register/complete" exact element={<RegisterComplete />} />
           <Route path="/forgot/password" exact element={<ForgotPassword />} />
-          
+          <Route path="/user/history" exact element={<History />} />
+
         </Routes>
       </BrowserRouter>
     </>
