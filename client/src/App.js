@@ -12,7 +12,12 @@ import Header from './components/nav/Header';
 import RegisterComplete from './pages/auth/RegisterComplete';
 import ForgotPassword from "./pages/auth/ForgotPassword";
 import History from './pages/user/History';
+import Password from './pages/user/Password';
+import Wishlist from './pages/user/Wishlist';
 import UserRoute from './components/routes/UserRoute';
+import AdminRoute from './components/routes/AdminRoute';
+import AdminDashboard from './pages/admin/AdminDashboard';
+
 import { auth } from './firebase';
 import { useDispatch } from 'react-redux';
 import { currentUser } from './functions/auth';
@@ -28,8 +33,8 @@ const App = () => {
       if (user) {
 
         const idTokenResult = await user.getIdTokenResult();
-        console.log("user", idTokenResult.token)
-
+       
+        
         // sending the token to backend for validation
         currentUser(idTokenResult.token)
           .then((res) => {
@@ -43,19 +48,23 @@ const App = () => {
                 role: res.data.role,
                 _id: res.data.id
               }
-            });
-
+            });      
           })
-          .catch();
+          .catch(
+            console.log("failed to validate user @ backend")
+          );
 
       }
     })
+
+   
+
     return () => unsubscribe();
   }, []);
 
   return (
     <>
-
+  
       <BrowserRouter>
 
         <Header />
@@ -66,7 +75,35 @@ const App = () => {
           <Route path="/register" exact element={<Register />} />
           <Route path="/register/complete" exact element={<RegisterComplete />} />
           <Route path="/forgot/password" exact element={<ForgotPassword />} />
-          <Route path="/user/history" exact element={<History />} />
+
+          <Route path="/user/history" element={
+                                                <UserRoute >
+                                                  <History />
+                                                </UserRoute>
+                                                } />
+
+       
+
+        <Route path="/user/password" element={
+                                                <UserRoute >
+                                                  <Password />
+                                                </UserRoute>
+                                                } />
+
+       
+
+        <Route path="/user/wishlist" element={
+                                                <UserRoute >
+                                                  <Wishlist />
+                                                </UserRoute>
+                                                } />
+
+      <Route path="/admin/dashboard" element={
+                                                <AdminRoute >
+                                                  <AdminDashboard />
+                                                </AdminRoute>
+                                                } />
+
 
         </Routes>
       </BrowserRouter>

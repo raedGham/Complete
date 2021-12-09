@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { auth } from '../../firebase';
 import { toast } from 'react-toastify';
 import { Button } from 'antd';
-import { MailOutlined, GoogleOutlined, SortAscendingOutlined } from '@ant-design/icons';
+import { MailOutlined, GoogleOutlined } from '@ant-design/icons';
 import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { Link } from "react-router-dom";
 import { createOrUpdateUser } from '../../functions/auth';

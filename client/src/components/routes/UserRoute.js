@@ -1,12 +1,17 @@
 import React from 'react';
-import { Route, Link } from 'react-router-dom';
+import { Navigate} from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 
-const UserRoute = ({ children, ...rest }) => {
-    const { user } = useSelector((state) => ({ state }));
+// this module is not working properly, it should implement protected routes but cannot access state!!!
 
-    return user && user.token ? (<Route {...rest} render={() => children} />) : (<h1>Loading</h1>);
+const UserRoute = ({ children }) => { 
+    const  {user}  = useSelector((state) => ({...state}));
+ console.log(user);
+   // return user && user.token ? children : <Navigate to="/login"/>;
+
+    return   true ? children : <Navigate to="/login"/>;
+
 
 }
 
