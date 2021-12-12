@@ -17,6 +17,7 @@ import Wishlist from './pages/user/Wishlist';
 import UserRoute from './components/routes/UserRoute';
 import AdminRoute from './components/routes/AdminRoute';
 import AdminDashboard from './pages/admin/AdminDashboard';
+import CategoryCreate from './pages/admin/Category/CategoryCreate';
 
 import { auth } from './firebase';
 import { useDispatch } from 'react-redux';
@@ -33,8 +34,8 @@ const App = () => {
       if (user) {
 
         const idTokenResult = await user.getIdTokenResult();
-       
-        
+
+
         // sending the token to backend for validation
         currentUser(idTokenResult.token)
           .then((res) => {
@@ -48,7 +49,7 @@ const App = () => {
                 role: res.data.role,
                 _id: res.data.id
               }
-            });      
+            });
           })
           .catch(
             console.log("failed to validate user @ backend")
@@ -57,14 +58,14 @@ const App = () => {
       }
     })
 
-   
+
 
     return () => unsubscribe();
   }, []);
 
   return (
     <>
-  
+
       <BrowserRouter>
 
         <Header />
@@ -77,33 +78,38 @@ const App = () => {
           <Route path="/forgot/password" exact element={<ForgotPassword />} />
 
           <Route path="/user/history" element={
-                                                <UserRoute >
-                                                  <History />
-                                                </UserRoute>
-                                                } />
+            <UserRoute >
+              <History />
+            </UserRoute>
+          } />
 
-       
 
-        <Route path="/user/password" element={
-                                                <UserRoute >
-                                                  <Password />
-                                                </UserRoute>
-                                                } />
 
-       
+          <Route path="/user/password" element={
+            <UserRoute >
+              <Password />
+            </UserRoute>
+          } />
 
-        <Route path="/user/wishlist" element={
-                                                <UserRoute >
-                                                  <Wishlist />
-                                                </UserRoute>
-                                                } />
 
-      <Route path="/admin/dashboard" element={
-                                                <AdminRoute >
-                                                  <AdminDashboard />
-                                                </AdminRoute>
-                                                } />
 
+          <Route path="/user/wishlist" element={
+            <UserRoute >
+              <Wishlist />
+            </UserRoute>
+          } />
+
+          <Route path="/admin/dashboard" element={
+            <AdminRoute >
+              <AdminDashboard />
+            </AdminRoute>
+          } />
+
+          <Route path="/admin/category" element={
+            <AdminRoute >
+              <CategoryCreate />
+            </AdminRoute>
+          } />
 
         </Routes>
       </BrowserRouter>

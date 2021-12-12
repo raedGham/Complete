@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch , useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { auth } from '../../firebase';
 import { Menu } from 'antd';
@@ -17,7 +17,7 @@ const Header = () => {
 
     const dispatch = useDispatch();
 
-    const {user} = useSelector((state)=> state );
+    const { user } = useSelector((state) => state);
 
 
     const [current, setCurrent] = useState("home");
@@ -39,31 +39,31 @@ const Header = () => {
                 <Link to="/"> Home </Link>
             </Item>
 
-{ user && (
-            <SubMenu key="SubMenu" icon={<SettingOutlined />} title={user.email && user.email.split('@')[0]} >
+            {user && (
+                <SubMenu key="SubMenu" icon={<SettingOutlined />} title={user.email && user.email.split('@')[0]} >
+                    {user && user.role === "subscriber" && <Item><Link to="/user/history">Dashboard </Link></Item>}
+                    {user && user.role === "admin" && <Item><Link to="/admin/dashboard">Dashboard </Link></Item>}
 
-                <Item key="setting:1">Option 1</Item>
-                <Item key="setting:2">Option 2</Item>
-                <Item icon={<LogoutOutlined />} onClick={logout}>Logout</Item>
+                    <Item icon={<LogoutOutlined />} onClick={logout}>Logout</Item>
 
-            </
+                </
 
-            SubMenu>
-
-            )}
-
-{ !user && (  <Item key="register" icon={<UserOutlined />} >
-               <Link to="/register"> Register </Link>
-              </Item>
+                SubMenu>
 
             )}
 
-{ !user && (             
-            <Item key="login" icon={<UserOutlined />}>
-                <Link to="/login"> Login </Link>
+            {!user && (<Item key="register" icon={<UserOutlined />} >
+                <Link to="/register"> Register </Link>
             </Item>
-           )}
-      
+
+            )}
+
+            {!user && (
+                <Item key="login" icon={<UserOutlined />}>
+                    <Link to="/login"> Login </Link>
+                </Item>
+            )}
+
 
 
 

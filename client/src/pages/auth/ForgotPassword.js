@@ -1,22 +1,24 @@
-import React, { useState, useEffect} from 'react';
-import { useDispatch,useSelector } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { auth } from '../../firebase';
 import { toast } from 'react-toastify';
-import {  sendPasswordResetEmail } from "firebase/auth"
+import { sendPasswordResetEmail } from "firebase/auth"
 
 
 function ForgotPassword() {
-    const [email,setEmail] = useState('');
+    const [email, setEmail] = useState('');
     const [loading, setLoading] = useState(false);
-    const {user} = useSelector((state)=> (state))
+    const { user } = useSelector((state) => (state))
     let navigate = useNavigate();
 
-    useEffect(()=> {
-    console.log("Forgot:",user);
-    if(user && user.token) {
-        navigate("/")
-    }},[user]);
+    useEffect(() => {
+
+        console.log("Forgot:", user);
+        if (user && user.token) {
+            navigate("/")
+        }
+    }, [user]);
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -42,15 +44,16 @@ function ForgotPassword() {
 
     return (
         <div className="container col-md-6 offset-md-3 p-5">
-          {loading ? <h4>Loading</h4>:<h4> Forgot Password</h4>}
+            {loading ? <h4>Loading</h4> : <h4> Forgot Password</h4>}
 
-          <form onSubmit={handleSubmit}>
-            <input type="email" className="form-control" value ={email} onChange={(e) => setEmail(e.target.value)} placeholder ="Enter your Email" autoFocus/> 
-            <br/>
-            <button className="btn btn-primary" disabled= {!email}>Submit</button>
-          </form>
+            <form onSubmit={handleSubmit}>
+                <input type="email" className="form-control" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Enter your Email" autoFocus />
+                <br />
+                <button className="btn btn-primary" disabled={!email}>Submit</button>
+            </form>
 
         </div>
-    )}
+    )
+}
 
 export default ForgotPassword;

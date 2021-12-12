@@ -4,9 +4,9 @@ const History = () => {
     return (
         <div className="container-fluid">
             <div className="row">
-                <div className="col-md-1">  <UserNav/></div>
+                <div className="col-md-2">  <UserNav /></div>
                 <div className="col text-left">  User history Page</div>
-               
+
             </div>
         </div>
     );

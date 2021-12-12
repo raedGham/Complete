@@ -3,16 +3,16 @@ import { useNavigate } from 'react-router-dom';
 import { signInWithEmailLink, updatePassword } from 'firebase/auth';
 import { auth } from "../../firebase";
 import { toast } from "react-toastify";
-import {useDispatch,  useSelector} from 'react-redux';
-import {createOrUpdateUser} from '../../functions/auth';
+import { useDispatch } from 'react-redux';
+import { createOrUpdateUser } from '../../functions/auth';
 
 
 const RegisterComplete = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  
-  const {user} = useSelector((state) => (state));
-   let dispatch = useDispatch();
+
+  // const {user} = useSelector((state) => (state));
+  let dispatch = useDispatch();
   let navigate = useNavigate();
   useEffect(() => {
     setEmail(window.localStorage.getItem("emailForRegistration"));
@@ -21,7 +21,7 @@ const RegisterComplete = () => {
   }, []);
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
     // validation
     if (!email || !password) {
       toast.error("Email and password is required");
@@ -49,23 +49,23 @@ const RegisterComplete = () => {
         // redux store
         console.log("user", user, "idTokenResult", idTokenResult);
 
-             // sending the token to backend for validation
-             createOrUpdateUser(idTokenResult.token)
-             .then((res) => {
-                 // saving user info to redux state
-                 dispatch({
-                     type: "LOGGED_IN_USER",
-                     payload: {
-                         name: res.data.name,
-                         email: res.data.email,
-                         token: idTokenResult.token,
-                         role: res.data.role,
-                         _id: res.data.id
-                     }
-                 });
-               
-             })
-             .catch();
+        // sending the token to backend for validation
+        createOrUpdateUser(idTokenResult.token)
+          .then((res) => {
+            // saving user info to redux state
+            dispatch({
+              type: "LOGGED_IN_USER",
+              payload: {
+                name: res.data.name,
+                email: res.data.email,
+                token: idTokenResult.token,
+                role: res.data.role,
+                _id: res.data.id
+              }
+            });
+
+          })
+          .catch();
 
         // redirect
         navigate("/");
