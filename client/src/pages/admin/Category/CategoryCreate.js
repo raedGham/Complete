@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import { createCategory, getCategories, removeCategory } from '../../../functions/category';
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import CategoryForm from '../../../components/forms/CategoryForm';
+import LocalSearch from '../../../components/forms/LocalSearch';
 
 
 const CategoryCreate = () => {
@@ -15,6 +16,9 @@ const CategoryCreate = () => {
     const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(false);
 
+    // searching/filtering  step 1
+    const [keyword, setKeyword] = useState("");
+
     useEffect(() => loadcategories(), []);
 
     const loadcategories = () => {
@@ -23,7 +27,7 @@ const CategoryCreate = () => {
     }
     const handleSubmit = (e) => {
         e.preventDefault();
-        
+
         setLoading(true);
         createCategory({ name }, user.token)
             .then(res => {
@@ -64,16 +68,27 @@ const CategoryCreate = () => {
 
 
 
+    // step 4
+    const searched = (keyword) => (c) => c.name.toLowerCase().includes(keyword);
+
+
     return (
         <div className="container-fluid">
             <div className="row">
                 <div className="col-md-2">  <AdminNav /></div>
                 <div className="col text-left">
                     {loading ? <h4 className='text-danger'>Loading...</h4> : <h4>Create Category</h4>}
-                    <CategoryForm handleSubmit= {handleSubmit} name={name} setName = {setName}/>
+                    <CategoryForm handleSubmit={handleSubmit} name={name} setName={setName} />
                     <hr />
 
-                    {categories.map((c) => (
+                    {/* steps 2 & 3 */}
+
+                    <LocalSearch keyword={keyword} setKeyword={setKeyword} />
+
+
+
+                    {/* step 5 */}
+                    {categories.filter(searched(keyword)).map((c) => (
                         <div key={c._id} className='alert alert-secondary'>{c.name}
                             <span className='btn btn-sm float-end' onClick={() => handleRemove(c.slug)}>
                                 <DeleteOutlined className='text-danger' />

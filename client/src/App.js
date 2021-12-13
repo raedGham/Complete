@@ -19,6 +19,8 @@ import AdminRoute from './components/routes/AdminRoute';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import CategoryCreate from './pages/admin/Category/CategoryCreate';
 import CategoryUpdate from './pages/admin/Category/CategoryUpdate';
+import SubCreate from './pages/admin/Sub/SubCreate';
+
 
 import { auth } from './firebase';
 import { useDispatch } from 'react-redux';
@@ -118,6 +120,11 @@ const App = () => {
             </AdminRoute>
           } />
 
+          <Route path="/admin/sub" exact element={
+            <AdminRoute >
+              <SubCreate />
+            </AdminRoute>
+          } />
         </Routes>
       </BrowserRouter>
     </>
