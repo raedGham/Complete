@@ -35,6 +35,7 @@ exports.read = async (req, res) => {
 exports.update = async (req, res) => {
     try {
         const { name } = req.body;
+        console.log(req.body);
         let updated = await Category.findOneAndUpdate({ slug: req.params.slug }, { name, slug: slugify(name) }, { new: true });
         res.json(updated);
     } catch (err) {

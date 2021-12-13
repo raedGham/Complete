@@ -18,6 +18,7 @@ import UserRoute from './components/routes/UserRoute';
 import AdminRoute from './components/routes/AdminRoute';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import CategoryCreate from './pages/admin/Category/CategoryCreate';
+import CategoryUpdate from './pages/admin/Category/CategoryUpdate';
 
 import { auth } from './firebase';
 import { useDispatch } from 'react-redux';
@@ -108,6 +109,12 @@ const App = () => {
           <Route path="/admin/category" element={
             <AdminRoute >
               <CategoryCreate />
+            </AdminRoute>
+          } />
+
+          <Route path="/admin/category/:slug" exact element={
+            <AdminRoute >
+              <CategoryUpdate />
             </AdminRoute>
           } />
 
