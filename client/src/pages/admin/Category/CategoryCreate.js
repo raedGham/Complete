@@ -5,6 +5,8 @@ import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import { createCategory, getCategories, removeCategory } from '../../../functions/category';
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import CategoryForm from '../../../components/forms/CategoryForm';
+
 
 const CategoryCreate = () => {
     const { user } = useSelector(state => ({ ...state }));
@@ -60,14 +62,6 @@ const CategoryCreate = () => {
 
     };
 
-    const showCategoryForm = () => <form onSubmit={handleSubmit}>
-        <div className="form-group">
-            <label className='pb-2'>Name</label>
-            <input type="text" className='form-control' value={name} onChange={(e) => setName(e.target.value)} autoFocus required />
-            <button className="btn btn-outline-primary mt-2" type="submit">Save</button>
-
-        </div>
-    </form>
 
 
     return (
@@ -76,7 +70,7 @@ const CategoryCreate = () => {
                 <div className="col-md-2">  <AdminNav /></div>
                 <div className="col text-left">
                     {loading ? <h4 className='text-danger'>Loading...</h4> : <h4>Create Category</h4>}
-                    {showCategoryForm()}
+                    <CategoryForm handleSubmit= {handleSubmit} name={name} setName = {setName}/>
                     <hr />
 
                     {categories.map((c) => (
