@@ -5,10 +5,11 @@ import { Link } from 'react-router-dom';
 
 const AdminNav = () => {
     return (
+        <div className = "bold" >
         <nav>
-            <ul className='nav flex-column'>
+            <ul className='nav flex-column '>
 
-                <li className='nav-item'>
+                <li className='nav-item ' >
                     <Link to="/admin/dashboard" className='nav-link'>DASHBOARD</Link>
                 </li>
 
@@ -39,6 +40,7 @@ const AdminNav = () => {
 
             </ul>
         </nav>
+        </div>
     );
 };
 
