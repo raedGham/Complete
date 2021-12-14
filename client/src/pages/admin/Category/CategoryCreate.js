@@ -76,7 +76,7 @@ const CategoryCreate = () => {
         <div className="container-fluid">
             <div className="row">
                 <div className="col-md-2">  <AdminNav /></div>
-                <div className="col text-left">
+                <div className="col-md-8 text-left">
                     {loading ? <h4 className='text-danger'>Loading...</h4> : <h4>Create Category</h4>}
                     <CategoryForm handleSubmit={handleSubmit} name={name} setName={setName} />
                     <hr />

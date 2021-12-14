@@ -4,7 +4,7 @@ import AdminNav from '../../../components/nav/AdminNav';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import { getCategories } from '../../../functions/category';
-import {createSub, removeSub, getSubs} from '../../../functions/sub';
+import { createSub, removeSub, getSubs } from '../../../functions/sub';
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import CategoryForm from '../../../components/forms/CategoryForm';
 import LocalSearch from '../../../components/forms/LocalSearch';
@@ -14,13 +14,13 @@ const SubCreate = () => {
     const { user } = useSelector(state => ({ ...state }));
 
     const [name, setName] = useState("");
-    
+
     // for parent select dropdown
     const [category, setCategory] = useState("");
 
     // to populate dropdown
     const [categories, setCategories] = useState([]);
-    
+
     // for subs list
     const [subs, setSubs] = useState([]);
 
@@ -31,9 +31,9 @@ const SubCreate = () => {
     const [keyword, setKeyword] = useState("");
 
     useEffect(() => {
-               loadcategories();
-               loadsubs();
-              }, []);
+        loadcategories();
+        loadsubs();
+    }, []);
 
     const loadcategories = () => {
         getCategories()
@@ -49,13 +49,13 @@ const SubCreate = () => {
         e.preventDefault();
 
         setLoading(true);
-        createSub({ name , parent:category}, user.token)
+        createSub({ name, parent: category }, user.token)
             .then(res => {
                 setLoading(false);
                 setName("");
 
-                toast.success(`${res.data.name} Sub category created successfully`); 
-                loadsubs();            
+                toast.success(`${res.data.name} Sub category created successfully`);
+                loadsubs();
 
             })
             .catch((err) => {
@@ -76,7 +76,7 @@ const SubCreate = () => {
                     setLoading(false);
                     toast.error(`${res.data.name} Sub Category Sucessfully Deleted`);
                     loadsubs();
-                  
+
                 })
                 .catch((err) => {
                     setLoading(false);
@@ -97,20 +97,20 @@ const SubCreate = () => {
         <div className="container-fluid">
             <div className="row">
                 <div className="col-md-2">  <AdminNav /></div>
-                <div className="col text-left">
+                <div className="col-md-8 text-left">
                     {loading ? <h4 className='text-danger'>Loading...</h4> : <h4>Create Sub Category</h4>}
 
                     <div className='form-group'>
                         <label>Parent Category</label>
-                        <select name="category" className="form-control mt-2 mb-2" onChange={(e)=>  {
-                                                                                                setCategory(e.target.value);
-                                                                                                  loadsubs();
-                                                                                                  }
-                                                                                                  }>
+                        <select name="category" className="form-control mt-2 mb-2" onChange={(e) => {
+                            setCategory(e.target.value);
+                            loadsubs();
+                        }
+                        }>
                             <option>Please Select</option>
-                           {categories.length>0 && categories.map((c) => (
-                               <option key={c._id} value = {c._id} > {c.name}</option>
-                           ))}
+                            {categories.length > 0 && categories.map((c) => (
+                                <option key={c._id} value={c._id} > {c.name}</option>
+                            ))}
                         </select>
                     </div>
                     {/* {JSON.stringify(category)} */}
