@@ -2,7 +2,7 @@ const admin = require('../firebase');
 const User = require('../models/user');
 
 exports.authCheck = async (req, res, next) => {
-    console.log("request headers: ", req.headers);  // we should have here the token that we sent from front end
+  //  console.log("request headers: ", req.headers);  // we should have here the token that we sent from front end
     try {
          
         const firebaseUser = await admin.auth().verifyIdToken(req.headers.authtoken);        

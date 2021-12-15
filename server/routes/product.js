@@ -7,10 +7,12 @@ const router = express.Router();
 const { authCheck, adminCheck } = require("../middlewares/auth")
 
 // controller
-const { create } = require('../controllers/product');
+const { create, read } = require('../controllers/product');
 
 // Routes
-router.post("/product", authCheck, adminCheck, create);          // route to create a category
 
+
+router.post("/product", authCheck, adminCheck, create);          // route to create a Product
+router.get("/products", read);          // route get list of products
 
 module.exports = router;
