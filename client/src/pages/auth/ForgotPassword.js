@@ -18,7 +18,7 @@ function ForgotPassword() {
         if (user && user.token) {
             navigate("/")
         }
-    }, [user]);
+    }, [user, navigate]);
 
     async function handleSubmit(e) {
         e.preventDefault();

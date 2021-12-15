@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import { createProduct } from '../../../functions/product';
 import { useSelector } from 'react-redux';
 import ProductCreateForm from '../../../components/forms/ProductCreateForm';
-import { getCategories, getCategorySubs  } from '../../../functions/category';
+import { getCategories, getCategorySubs } from '../../../functions/category';
 
 
 const ProductCreate = () => {
@@ -23,9 +23,9 @@ const ProductCreate = () => {
         brands: ["Apple", "Samsung", "Microsoft", "Lenovo", "Asus", "HP"],
         color: "",
         brand: "",
-    };  
+    };
     const [values, setValues] = useState(initialState);
-    const  [subOptions, setSubOptions] = useState([]);
+    const [subOptions, setSubOptions] = useState([]);
     const [showSub, setShowSub] = useState(false);
 
     const { user } = useSelector((state) => ({ ...state }));
@@ -33,14 +33,14 @@ const ProductCreate = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         createProduct(values, user.token)
-            .then(res => {                
+            .then(res => {
                 toast.success(`${res.data.title} created Sucessfully`)
-             const intv =  setInterval(()=>window.location.reload(), 1000);
-                
+                setInterval(() => window.location.reload(), 1000);
+
             })
             .catch(err => {
-                console.log("create Product catch err",err.response)      
-            if (err.response.status === 400) toast.error(err.response.data.err);
+                console.log("create Product catch err", err.response)
+                if (err.response.status === 400) toast.error(err.response.data.err);
             });
     }
 
@@ -51,23 +51,23 @@ const ProductCreate = () => {
     const handleCategoryChange = (e) => {
         e.preventDefault();
         console.log('Clicked category', e.target.value);
-        setValues({...values, subs:[],  category: e.target.value});
+        setValues({ ...values, subs: [], category: e.target.value });
         getCategorySubs(e.target.value)
-        .then(res=> {
-            console.log("CATEGORY CLICK RESPONSE ", res.data);
-            setSubOptions(res.data);
-            setShowSub(true);
-        });
+            .then(res => {
+                console.log("CATEGORY CLICK RESPONSE ", res.data);
+                setSubOptions(res.data);
+                setShowSub(true);
+            });
     }
 
     const loadcategories = () => {
         getCategories()
-            .then((c) => setValues({...values , categories:c.data}))
+            .then((c) => setValues({ ...values, categories: c.data }))
     }
 
-useEffect(()=> {loadcategories()}, []);
+    useEffect(() => { loadcategories() }, []);
 
-  
+
     return (
         <div className="container-fluid">
             <div className="row">
@@ -75,15 +75,15 @@ useEffect(()=> {loadcategories()}, []);
                 <div className="col-md-8 text-left">
                     <h4>Create Product</h4>
                     <hr />
-                     {/* {JSON.stringify(values.subs)}  */}
-                    <ProductCreateForm 
-                         handleSubmit={handleSubmit} 
-                         handleChange={handleChange} 
-                         handleCategoryChange = {handleCategoryChange} 
-                         values={values}  
-                         setValues={setValues}
-                         subOptions= {subOptions}  
-                         showSub= {showSub}
+                    {/* {JSON.stringify(values.subs)}  */}
+                    <ProductCreateForm
+                        handleSubmit={handleSubmit}
+                        handleChange={handleChange}
+                        handleCategoryChange={handleCategoryChange}
+                        values={values}
+                        setValues={setValues}
+                        subOptions={subOptions}
+                        showSub={showSub}
                     />
                 </div>
             </div>

@@ -17,6 +17,7 @@ const Login = () => {
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
     const { user } = useSelector((state) => (state));
+    const navigate = useNavigate();
 
     const roleBasedRedirect = (res) => {
         if (res.data.role === "admin") {
@@ -30,10 +31,10 @@ const Login = () => {
         if (user && user.token) {
             navigate("/")
         }
-    }, [user]);
+    }, [user, navigate]);
 
 
-    const navigate = useNavigate();
+
     let dispatch = useDispatch();
     const provider = new GoogleAuthProvider();
     const handleSubmit = async (e) => {
@@ -117,87 +118,52 @@ const Login = () => {
 
 
     const loginForm = () => {
-        return (<
-            form onSubmit={
-                handleSubmit
-            } >
-            <
-                input type="text"
-                className="form-control"
-                value={
-                    email
-                }
-                onChange={
-                    e => setEmail(e.target.value)
-                }
-                placeholder="Email"
-                autoFocus />
-            <
-                input type="password"
-                className="form-control mt-3"
-                value={
-                    password
-                }
-                onChange={
-                    e => setPassword(e.target.value)
-                }
+        return (<form onSubmit={handleSubmit} >
+
+            <input type="text" className="form-control" value={email} onChange={e => setEmail(e.target.value)}
+                placeholder="Email" autoFocus />
+
+            <input type="password" className="form-control mt-3" value={password} onChange={e => setPassword(e.target.value)}
                 placeholder="Password" />
-            <
-            Button type="primary"
+
+            <Button
+                type="primary"
                 className="mt-3 "
                 block shape="round"
-                icon={
-                    < MailOutlined />
-                }
+                icon={< MailOutlined />}
                 size="large"
-                disabled={
-                    !email || password.length < 6
-                }
-                onClick={
-                    handleSubmit
-                } > Log In with Email / Password < /Button> <
-            /form>
+                disabled={!email || password.length < 6}
+                onClick={handleSubmit} > Log In with Email / Password
+            </Button>
+        </form>
 
-                )
+        )
     }
 
-                return <div className="container p-5" >
+    return <div className="container p-5" >
+        <div className="row" >
+            <div className="col-md-6 offset-md-3" >
 
-                    <
-        div className="row" >
-                        <
-        div className="col-md-6 offset-md-3" >
+                {!loading ? <h4> Login </h4> : <h4>Loading...</h4 >}
 
-                            {
-                                !loading ? < h4 > Login < /h4>: <h4>Loading...</h4 >
-        }
+                {loginForm()}
 
-                                    {
-                                        loginForm()
-                                    }
+                <Button
+                    type="danger"
+                    className="mt-3 "
+                    block shape="round"
+                    icon={< GoogleOutlined />}
+                    size="large"
+                    onClick={googleLogin} > Log In with Google Account
+                </Button>
+                <Link to="/forgot/password" className="float-end mt-2 text-danger" > Forgot Passsword </Link>
 
-                                    <
-    Button type="danger"
-                                        className="mt-3 "
-                                        block shape="round"
-                                        icon={
-                                            < GoogleOutlined />
-                                        }
-                                        size="large"
-                                        onClick={
-                                            googleLogin
-                                        } > Log In with Google Account < /Button> <
-        Link to="/forgot/password"
-                                            className="float-end mt-2 text-danger" > Forgot Passsword < /Link>
+            </div>
+        </div>
 
-                                            <
-        /div> <
-        /div>
-
-                                            <
-        /div>;
+    </div>;
 }
 
 
 
-                                            export default Login;
+export default Login;
