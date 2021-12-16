@@ -12,7 +12,7 @@ const productSchema = new mongoose.Schema({
     subs        : [ { type: ObjectId, ref: "Sub" }],
     quantity: { type: Number },
     sold: { type: Number, default: 0 },
-    //  images      : {type:Array},
+    images      : {type:Array},
     shipping: { type: String, enum: ["Yes", "No"] },
     color: { type: String, enum: ["Black", "Brown", "Silver", "White", "Blue"] },
     brand: { type: String, enum: ["Apple", "Samsung", "Microsoft", "Lenovo", "Asus", "HP"] },

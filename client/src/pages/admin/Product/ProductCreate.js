@@ -6,7 +6,8 @@ import { createProduct } from '../../../functions/product';
 import { useSelector } from 'react-redux';
 import ProductCreateForm from '../../../components/forms/ProductCreateForm';
 import { getCategories, getCategorySubs } from '../../../functions/category';
-
+import FileUpload from '../../../components/forms/FileUpload';
+import {LoadingOutlined} from '@ant-design/icons';
 
 const ProductCreate = () => {
     const initialState = {
@@ -27,6 +28,7 @@ const ProductCreate = () => {
     const [values, setValues] = useState(initialState);
     const [subOptions, setSubOptions] = useState([]);
     const [showSub, setShowSub] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const { user } = useSelector((state) => ({ ...state }));
 
@@ -73,9 +75,14 @@ const ProductCreate = () => {
             <div className="row">
                 <div className="col-md-2">  <AdminNav /></div>
                 <div className="col-md-8 text-left">
-                    <h4>Create Product</h4>
+                   { loading ? <LoadingOutlined className='text-danger h3'/> :<h4>Create Product</h4>} 
                     <hr />
-                    {/* {JSON.stringify(values.subs)}  */}
+                
+
+                    <div className='mb-1'>
+                        <FileUpload values={values} setValues= {setValues} setLoading = {setLoading}/>
+                    </div>
+                    {/* {JSON.stringify(values.images)}       */}
                     <ProductCreateForm
                         handleSubmit={handleSubmit}
                         handleChange={handleChange}
