@@ -1,12 +1,19 @@
-import React from 'react';
-
+import React, { useEffect, useState } from 'react';
+import { getProductsByCount } from '../functions/product';
 const Home = () => {
-    return (<div >
+
+    const [products, setProducts] = useState([]);
+    const [loading, setLoading] = useState(false);
 
 
-        <div>Home</div>
 
-    </div>)
+
+    return (
+        <div >
+            <div>Home</div>
+
+        </div>
+    )
 }
 
 
