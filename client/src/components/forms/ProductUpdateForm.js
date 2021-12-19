@@ -4,7 +4,7 @@ const { Option } = Select;
 
 const ProductUpdateForm = ({ handleSubmit, handleChange, handleCategoryChange, values, subOptions, setValues, categories, arrayOfSubIds, setArrayOfSubIds, selectedCategory }) => {
     const { title, description, price, subs, quantity, images, colors, brands, color, shipping, brand, category } = values;
-    console.log(category.name);
+
     return (
         <form onSubmit={handleSubmit}>
 

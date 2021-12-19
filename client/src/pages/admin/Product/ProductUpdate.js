@@ -77,12 +77,13 @@ const ProductUpdate = () => {
         updateProduct(slug, values, user.token)
             .then(res => {
                 setLoading(false);
-
                 toast.success(`${res.data.title} Product updated successfully`);
                 navigate("/admin/products");
             })
             .catch((err) => {
                 setLoading(false);
+                console.log(err);
+
                 toast.error(err.response.data.err);
 
             });
