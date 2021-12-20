@@ -50,7 +50,7 @@ exports.read = async (req, res) => {
 exports.update = async (req, res) => {
     try {
         if (req.body.title) {
-            req.body.slug = slugify(title);
+            req.body.slug = slugify(req.body.title);
         }
         let updated = await Product.findOneAndUpdate({ slug: req.params.slug }, req.body, { new: true }).exec();
         res.json(updated);
@@ -58,3 +58,19 @@ exports.update = async (req, res) => {
         res.status(400).send("Product update failed");
     }
 };
+
+exports.list = async (req, res) => {
+    try {
+        const  {sort , order, limit} = req.body
+        const  products = await Product.find({})
+        .populate('subs')
+        .sort([[sort, order]])
+        .limit(limit)
+        .exec();
+
+        res.json(products);
+    }
+    catch (err) {
+      console.log(err);
+    }
+}
