@@ -5,3 +5,8 @@
 .textsize {
     font-size: 12px ! important ;
 }
+
+.slider img {
+    height: 500px;
+    object-fit: cover;
+}

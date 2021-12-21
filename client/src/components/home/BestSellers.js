@@ -47,7 +47,7 @@ const BestSellers = () => {
           </div>
         )}
       </div>
-      <Pagination current={page} total={(productsCount / 4) * 10} onChange={(value) => setPage(value)} className="text-center m-3" />
+      <Pagination current={page} total={( Math.floor(productsCount / 4)+1) * 10} onChange={(value) => setPage(value)} className="text-center m-3" />
     </>
   );
 };
