@@ -113,7 +113,13 @@ exports.productStar = async (req, res) => {
     const { star } = req.body
 
     // check if currently logged on user has already rated the product
-    if (product.rating.postedBy === user._id) {
+    let existingRatingObject = product.ratings.find((r) => (r.postedBy == user._id))
 
+    //  if user haven't left a rating the push it
+    if (existingRatingObject === undefined) {
+        let ratingAdded = await Product.findByIdAndUpdate(product._id, {
+            $push: { ratings: { star: star, postedBy: user._id } }
+        }, { new: true })
     }
+    //  if user already left rating then update it 
 }
