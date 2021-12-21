@@ -25,7 +25,7 @@ function ForgotPassword() {
         setLoading(true);
 
         const config = {
-            url: process.env.REACT_APP_FORGOT_PASSWORD_REDIRECT_URL,
+            url: process.env.REACT_APP_FORGOT_PASSWORD_REDIRECT_URL || process.env.REACT_APP_FORGOT_PASSWORD_REDIRECT_URL1,
             handleCodeInApp: true
         };
 

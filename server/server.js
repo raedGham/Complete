@@ -35,8 +35,10 @@ readdirSync("./routes").map((r) => app.use("/api", require("./routes/" + r)));
 
 // port
 
-const port = process.env.port || 8000
+const port = process.env.PORT || 8000
+const host = process.env.HOST || '127.0.0.1';
 
-app.listen(port, '10.10.12.191', () => {
-                                  console.log(`Server started on port ${port}`)}
-                                  )
+app.listen(port, host, () => {
+  console.log(`Server started on port ${port}`)
+}
+)

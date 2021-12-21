@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import { auth } from '../../firebase';
 import { toast } from 'react-toastify';
 import { sendSignInLinkToEmail } from "firebase/auth";
@@ -11,23 +11,24 @@ const Register = () => {
 
     const [email, setEmail] = useState("");
 
-    const {user} = useSelector((state)=> (state));
+    const { user } = useSelector((state) => (state));
 
     const navigate = useNavigate();
 
-    
-    useEffect(()=> {
-        console.log("Login:",user);
-        if(user && user.token) {
+
+    useEffect(() => {
+        console.log("Login:", user);
+        if (user && user.token) {
             navigate("/")
-        }},[user]);
+        }
+    }, [user]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
 
         const config = {
-            url: process.env.REACT_APP_REGISTER_REDIRECT_URL,
+            url: process.env.REACT_APP_REGISTER_REDIRECT_URL || process.env.REACT_APP_REGISTER_REDIRECT_URL1,
             handleCodeInApp: true
         }
 
@@ -43,8 +44,8 @@ const Register = () => {
     const registerForm = () => {
         return (
             <form onSubmit={handleSubmit}>
-                <input type="text" className="form-control" value={email} onChange={e => setEmail(e.target.value)} placeholder="Your Email" autoFocus/>
-          
+                <input type="text" className="form-control" value={email} onChange={e => setEmail(e.target.value)} placeholder="Your Email" autoFocus />
+
                 <button type="submit" className="btn btn-primary mt-3">Register</button>
             </form>
 
