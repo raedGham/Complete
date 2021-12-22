@@ -21,7 +21,7 @@ router.put("/product/:slug", authCheck, adminCheck, update);             // rout
 router.post('/products', list);                                          // used for home page products
 
 // rating route
-router.put("product/rating/:productid", authCheck, productStar);
+router.put("product/star/:productid", authCheck, productStar);
 
 
 module.exports = router;

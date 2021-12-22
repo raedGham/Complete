@@ -7,7 +7,7 @@ const ProductListItems = ({ product }) => {
         <div>
             <ul className='list-group'>
                 <li className='list-group-item'>
-                    Price {" "} <span className='label label-default label-pill float-sm-end'>${price}</span>
+                    Price {" "} <h4 className='label label-default label-pill float-sm-end '>${price}</h4>
                 </li>
                 {category && <li className='list-group-item'>
                     Category {" "} <Link to={`/category/${category.slug}`} className='label label-default label-pill float-sm-end' >{category.name}</Link>

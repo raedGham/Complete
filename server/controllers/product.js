@@ -119,7 +119,16 @@ exports.productStar = async (req, res) => {
     if (existingRatingObject === undefined) {
         let ratingAdded = await Product.findByIdAndUpdate(product._id, {
             $push: { ratings: { star: star, postedBy: user._id } }
-        }, { new: true })
+        }, { new: true }).exec();
+        res.json(ratingAdded);  
+    } else {//  if user already left rating then update it 
+           
+         const ratingUpdated = await Product.updateOne(
+             
+                 {ratings:{$elemMatch: existingRatingObject} }, {$set: {"ratings.$.star": star}}  , {new:true}    
+    
+             ).exec();
+             res.json(ratingUpdated);
     }
-    //  if user already left rating then update it 
+
 }
