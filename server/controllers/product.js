@@ -107,28 +107,42 @@ exports.productsCount = async (req, res) => {
 }
 
 exports.productStar = async (req, res) => {
+
     let product = await Product.findById(req.params.productid).exec();
     let user = await User.findOne({ email: req.user.email }).exec();
-
+    console.log("user id", user._id)
     const { star } = req.body
 
     // check if currently logged on user has already rated the product
-    let existingRatingObject = product.ratings.find((r) => (r.postedBy == user._id))
-
+    let existingRatingObject = product.ratings.find((r) => (r.postedBy.equals(user._id)))
+    console.log(existingRatingObject);
     //  if user haven't left a rating the push it
     if (existingRatingObject === undefined) {
         let ratingAdded = await Product.findByIdAndUpdate(product._id, {
             $push: { ratings: { star: star, postedBy: user._id } }
         }, { new: true }).exec();
-        res.json(ratingAdded);  
+        res.json(ratingAdded);
     } else {//  if user already left rating then update it 
-           
-         const ratingUpdated = await Product.updateOne(
-             
-                 {ratings:{$elemMatch: existingRatingObject} }, {$set: {"ratings.$.star": star}}  , {new:true}    
-    
-             ).exec();
-             res.json(ratingUpdated);
+
+        const ratingUpdated = await Product.updateOne(
+
+            { ratings: { $elemMatch: existingRatingObject } }, { $set: { "ratings.$.star": star } }, { new: true }
+
+        ).exec();
+        res.json(ratingUpdated);
     }
 
+}
+
+exports.listRelated = async (req, res) => {
+
+    const product = await Product.findById(req.params.productId).exec();
+    // console.log("PRODUCT", product.category);
+
+    const related = await Product.find({ _id: { $ne: product._id }, category: product.category })
+        .limit(3)
+        .populate("category")
+        .populate("subs")
+        .exec();
+    res.json(related)
 }

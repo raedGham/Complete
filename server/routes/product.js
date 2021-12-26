@@ -7,7 +7,7 @@ const router = express.Router();
 const { authCheck, adminCheck } = require("../middlewares/auth")
 
 // controller
-const { create, listAll, remove, read, update, list, productsCount, productStar } = require('../controllers/product');
+const { create, listAll, remove, read, update, list, productsCount, productStar, listRelated } = require('../controllers/product');
 
 // Routes
 
@@ -21,7 +21,8 @@ router.put("/product/:slug", authCheck, adminCheck, update);             // rout
 router.post('/products', list);                                          // used for home page products
 
 // rating route
-router.put("product/star/:productid", authCheck, productStar);
+router.put("/product/star/:productid", authCheck, productStar);
 
+router.get("/product/related/:productId", listRelated);
 
 module.exports = router;

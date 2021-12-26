@@ -8,8 +8,8 @@ import defaultPicture from '../../images/default.png';
 import ProductListItems from './ProductListItems';
 import StarRating from 'react-star-ratings';
 import RatingModal from '../modal/RatingModal';
-
-
+import { showAverage } from '../../functions/rating';
+import { getRelated } from '../../functions/product';
 
 const { TabPane } = Tabs;
 
@@ -18,8 +18,14 @@ const { TabPane } = Tabs;
 
 
 
-const SingleProduct = ({ product }) => {
+const SingleProduct = ({ product, star, onStarClick }) => {
+
+
+
   const { title, images, description, _id } = product;
+  // console.log("product", product);
+
+
   return (
     <>
 
@@ -42,7 +48,7 @@ const SingleProduct = ({ product }) => {
 
       <div className='col-md-5'>
         <h2 className='bg-secondary text-light py-1 px-2 '> {title}</h2>
-      
+        {product && product.ratings && product.ratings.length > 0 ? showAverage(product) : <p className='text-center pt-1 pb-3'> no ratings yet</p>}
 
         <Card
           actions={[
@@ -52,19 +58,18 @@ const SingleProduct = ({ product }) => {
             <Link to="/">
               <HeartOutlined className="text-primary" /> <br /> Add To WishList
             </Link>,
-               <RatingModal>  
-               <StarRating name = {_id}  
-                           numberOfStarts={5}  
-                           rating={2} 
-                           changeRating= {(newRating, name)=> (console.log("newRating", newRating, "name", name))}
-                           isSelectable = {true}
-                           starRatedColor="red"                    
-                />
-                </RatingModal>
+            <RatingModal>
+              <StarRating name={_id}
+                numberOfStarts={5}
+                rating={star}
+                changeRating={onStarClick}
+                isSelectable={true}
+                starRatedColor="red"
+              />
+            </RatingModal>
           ]}
 
         >
-
 
           <ProductListItems product={product} />
         </Card>

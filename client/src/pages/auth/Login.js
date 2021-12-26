@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { auth } from '../../firebase';
 import { toast } from 'react-toastify';
 import { Button } from 'antd';
@@ -18,16 +18,24 @@ const Login = () => {
     const [loading, setLoading] = useState(false);
     const { user } = useSelector((state) => (state));
     const navigate = useNavigate();
-
+    const location = useLocation();
     const roleBasedRedirect = (res) => {
-        if (res.data.role === "admin") {
-            navigate("/admin/dashboard");
+
+        // console.log("location state from in login ", location.state.from);
+
+        let intended = location.state;
+        if (intended) {
+            navigate(intended.from)
         } else {
-            navigate("/user/history");
+            if (res.data.role === "admin") {
+                navigate("/admin/dashboard");
+            } else {
+                navigate("/user/history");
+            }
         }
     }
     useEffect(() => {
-        console.log("Login:", user);
+        // console.log("Login:", user);
         if (user && user.token) {
             navigate("/")
         }
@@ -58,7 +66,7 @@ const Login = () => {
                             email: res.data.email,
                             token: idTokenResult.token,
                             role: res.data.role,
-                            _id: res.data.id
+                            _id: res.data._id
                         }
                     });
                     setLoading(false);
@@ -90,6 +98,7 @@ const Login = () => {
                 // sending the token to backend for validation
                 createOrUpdateUser(idTokenResult.token)
                     .then((res) => {
+                        // console.log("login res.data", res.data)
                         // saving user info to redux state
                         dispatch({
                             type: "LOGGED_IN_USER",
@@ -98,7 +107,7 @@ const Login = () => {
                                 email: res.data.email,
                                 token: idTokenResult.token,
                                 role: res.data.role,
-                                _id: res.data.id
+                                _id: res.data._id
                             }
                         });
                         setLoading(false);
@@ -118,6 +127,7 @@ const Login = () => {
 
 
     const loginForm = () => {
+
         return (<form onSubmit={handleSubmit} >
 
             <input type="text" className="form-control" value={email} onChange={e => setEmail(e.target.value)}
