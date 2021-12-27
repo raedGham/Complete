@@ -3,7 +3,7 @@ import { Select } from 'antd';
 const { Option } = Select;
 
 const ProductUpdateForm = ({ handleSubmit, handleChange, handleCategoryChange, values, subOptions, setValues, categories, arrayOfSubIds, setArrayOfSubIds, selectedCategory }) => {
-    const { title, description, price, subs, quantity, images, colors, brands, color, shipping, brand, category } = values;
+    const { title, description, price, quantity, colors, brands, color, shipping, brand, category } = values;
 
     return (
         <form onSubmit={handleSubmit}>

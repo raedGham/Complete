@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getProduct, productStar } from '../functions/product';
+import { getProduct } from '../functions/product';
 import { useParams } from 'react-router-dom';
 import SingleProduct from '../components/cards/SingleProduct';
 import { productStarRating } from '../functions/product';

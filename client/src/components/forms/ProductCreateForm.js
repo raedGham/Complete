@@ -3,7 +3,7 @@ import { Select } from 'antd';
 const { Option } = Select;
 
 const ProductCreateForm = ({ handleSubmit, handleChange, handleCategoryChange, values, subOptions, showSub, setValues }) => {
-    const { title, description, price, categories, subs, quantity, images, colors, brands, color } = values;
+    const { title, description, price, categories, subs, quantity, colors, brands } = values;
     return (
         <form onSubmit={handleSubmit}>
 

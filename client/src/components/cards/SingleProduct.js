@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, Tabs } from 'antd';
 import { Link } from 'react-router-dom';
-import { HeartOutlined, ShoppingCartOutlined, StarOutlined } from '@ant-design/icons';
+import { HeartOutlined, ShoppingCartOutlined} from '@ant-design/icons';
 import { Carousel } from 'react-responsive-carousel';
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import defaultPicture from '../../images/default.png';
@@ -9,7 +9,7 @@ import ProductListItems from './ProductListItems';
 import StarRating from 'react-star-ratings';
 import RatingModal from '../modal/RatingModal';
 import { showAverage } from '../../functions/rating';
-import { getRelated } from '../../functions/product';
+
 
 const { TabPane } = Tabs;
 
@@ -32,11 +32,11 @@ const SingleProduct = ({ product, star, onStarClick }) => {
       <div className='col-md-6'>
         {images && images.length ? (
           <Carousel >
-            {images && (images.map((i) => <img src={i.url} key={i.public_id} />))}
+            {images && (images.map((i) => <img src={i.url} key={i.public_id} alt="" />))}
           </Carousel>) :
           (
             <Card
-              cover={<img src={defaultPicture} style={{ height: "350px", objectFit: "cover" }} className='mb-3' />}>
+              cover={<img src={defaultPicture} style={{ height: "350px", objectFit: "cover" }} alt="" className='mb-3' />}>
             </Card>
           )}
 

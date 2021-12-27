@@ -12,6 +12,6 @@
     object-fit: cover;
 }
 
-.loop {
-    display: inline !important;
+.search {
+    display: inline-block !important;
 }

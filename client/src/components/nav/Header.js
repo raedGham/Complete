@@ -51,9 +51,7 @@ const Header = () => {
 
                     <Item icon={<LogoutOutlined />} onClick={logout}>Logout</Item>
 
-                </
-
-                SubMenu>
+                </SubMenu>
 
             )}
 
@@ -71,9 +69,11 @@ const Header = () => {
                 </Item>
             )}
         
-        <div  className=' p-2'>
-               <Search /> 
-           </div>
+           <Item key="search" className='p-1'>
+           
+               <Search  /> 
+           </Item>
+
        
         </Menu >
         
