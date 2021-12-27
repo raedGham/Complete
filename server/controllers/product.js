@@ -2,6 +2,7 @@ const Product = require('../models/product');
 const User = require('../models/user');
 
 const slugify = require('slugify');
+const { get } = require('mongoose');
 
 exports.create = async (req, res) => {
     try {
@@ -150,24 +151,47 @@ exports.listRelated = async (req, res) => {
 
 // search filter 
 
-const handleQuery = async (req, res,query) => {
-    
-   const products = await Product.find({ $text: {$search:query} })
-                                .populate('category' ,'_id name')
-                                .populate('subs' ,'_id name')
-                                .exec();
-   res.json(products);
+const handleQuery = async (req, res, query) => {
+
+    const products = await Product.find({ $text: { $search: query } })
+        .populate('category', '_id name')
+        .populate('subs', '_id name')
+        .exec();
+    res.json(products);
 }
 
+const handlePrice = async (req, res, price) => {
+    try {
+        const products = await Product.find({
+            price: {
+                $gte: price[0],
+                $lte: price[1]
+            }
+
+        })
+            .populate('category', '_id name')
+            .populate('subs', '_id name')
+            .exec();
+        res.json(products);
+    }
+    catch (err) {
+        console.log(err);
+    }
+}
 
 exports.searchFilters = async (req, res) => {
-    
-    const {query} = req.body;
+
+    const { query, price } = req.body;
 
     if (query) {
         console.log("query:", query);
-        await handleQuery(req,res,query);
+        await handleQuery(req, res, query);
 
+    }
+
+    if (price !== undefined) {
+        console.log("Price:", price);
+        await handlePrice(req, res, price);
     }
 
 }
