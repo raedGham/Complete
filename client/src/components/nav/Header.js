@@ -3,8 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { auth } from '../../firebase';
 import { Menu } from 'antd';
-import { UserOutlined, SettingOutlined, WindowsOutlined, LogoutOutlined } from '@ant-design/icons';
+import { UserOutlined, SettingOutlined, WindowsOutlined, LogoutOutlined , ShoppingOutlined} from '@ant-design/icons';
 import { Link } from 'react-router-dom';
+import Search from '../forms/Search';
 
 
 
@@ -34,9 +35,13 @@ const Header = () => {
     }
 
     return (
-        <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal" className="justify-content-right">
+        <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal" >
             <Item key="home" icon={<WindowsOutlined />} >
                 <Link to="/"> Home </Link>
+            </Item>
+
+            <Item key="shop" icon={<ShoppingOutlined />} >
+                <Link to="/shop"> Shop </Link>
             </Item>
 
             {user && (
@@ -58,16 +63,20 @@ const Header = () => {
 
             )}
 
+           
+
             {!user && (
                 <Item key="login" icon={<UserOutlined />}>
                     <Link to="/login"> Login </Link>
                 </Item>
             )}
-
-
-
-
+        
+        <div  className=' p-2'>
+               <Search /> 
+           </div>
+       
         </Menu >
+        
     );
 }
 

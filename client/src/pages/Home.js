@@ -4,6 +4,7 @@ import NewArrivals from "../components/home/NewArrivals";
 import BestSellers from "../components/home/BestSellers";
 import { useNavigate } from "react-router-dom";
 import CategoryList from "../components/category/CategoryList";
+import SubList from "../components/sub/SubList";
 const Home = () => {
   const navigate = useNavigate();
   return (
@@ -21,6 +22,8 @@ const Home = () => {
 
       <h4 className="text-center p-3 mt-3 mb-3 bg-light"> Categories </h4>
       <CategoryList />
+      <h4 className="text-center p-3 mt-3 mb-3 bg-light"> Sub Categories </h4>
+      <SubList />
     </>
   );
 };
