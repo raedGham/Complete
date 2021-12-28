@@ -15,3 +15,14 @@
 .search {
     display: inline-block !important;
 }
+
+.badcss {
+  font-size: 12px !important;
+  color:white !important;
+  background-color: dimgray !important;
+  cursor: pointer !important;
+}
+
+.brand {
+   display: block !important;
+}
