@@ -32,7 +32,7 @@ import Shop from './pages/shop';
 import { auth } from './firebase';
 import { useDispatch } from 'react-redux';
 import { currentUser } from './functions/auth';
-
+import Cart from './pages/cart';
 
 const App = () => {
 
@@ -176,6 +176,12 @@ const App = () => {
           <Route path="/shop" exact element={
 
           <Shop />
+
+          } />
+
+          <Route path="/cart" exact element={
+
+          <Cart />
 
           } />
 

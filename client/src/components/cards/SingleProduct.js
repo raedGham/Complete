@@ -1,5 +1,5 @@
-import React from 'react';
-import { Card, Tabs } from 'antd';
+import React, {useState} from 'react';
+import { Card, Tabs, Tooltip } from 'antd';
 import { Link } from 'react-router-dom';
 import { HeartOutlined, ShoppingCartOutlined} from '@ant-design/icons';
 import { Carousel } from 'react-responsive-carousel';
@@ -9,7 +9,8 @@ import ProductListItems from './ProductListItems';
 import StarRating from 'react-star-ratings';
 import RatingModal from '../modal/RatingModal';
 import { showAverage } from '../../functions/rating';
-
+import _ from 'lodash';
+import {useSelector, useDispatch} from 'react-redux';
 
 const { TabPane } = Tabs;
 
@@ -24,8 +25,37 @@ const SingleProduct = ({ product, star, onStarClick }) => {
 
   const { title, images, description, _id } = product;
   // console.log("product", product);
+  const [tooltip, setTooltip] = useState('Click to add');
+
+  // redux
+  const {user , cart} = useSelector((state) => ({...state}));
+  const dispatch = useDispatch();
+
+  const handleAddToCart = () => {
+   
+    let cart = [];
+    if (typeof window !== "undefined") {
+      // if cart is already in local storage, get it
+      if (localStorage.getItem("cart")) {
+        cart = JSON.parse(localStorage.getItem("cart"))
+      }
+
+      cart.push({ ...product, count: 1 });
+      //remove duplicates by using lodash
+      let unique = _.uniqWith(cart, _.isEqual);
 
 
+      localStorage.setItem("cart", JSON.stringify(unique));
+       //show tooptip
+       setTooltip('Added');
+
+       //add to redux state
+       dispatch({
+         type   : "ADD_TO_CART",
+         payload: unique,
+       })
+    }
+  }
   return (
     <>
 
@@ -52,9 +82,12 @@ const SingleProduct = ({ product, star, onStarClick }) => {
 
         <Card
           actions={[
-            <>
+            <Tooltip title={tooltip}>
+            <a  onClick={handleAddToCart}> 
               <ShoppingCartOutlined className="text-success" /> <br /> Add To Cart
-            </>,
+            </a>
+            </Tooltip>,
+
             <Link to="/">
               <HeartOutlined className="text-primary" /> <br /> Add To WishList
             </Link>,

@@ -21,9 +21,9 @@ const Login = () => {
     const location = useLocation();
     const roleBasedRedirect = (res) => {
 
-        // console.log("location state from in login ", location.state.from);
+    console.log("location state from in login ", location.state.from);
 
-        let intended = location.state;
+     let intended = location.state;
         if (intended) {
             navigate(intended.from)
         } else {

@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { auth } from '../../firebase';
-import { Menu } from 'antd';
-import { UserOutlined, SettingOutlined, WindowsOutlined, LogoutOutlined , ShoppingOutlined} from '@ant-design/icons';
+import { Menu , Badge} from 'antd';
+import { UserOutlined, SettingOutlined, WindowsOutlined, LogoutOutlined , ShoppingOutlined, ShoppingCartOutlined} from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import Search from '../forms/Search';
 
@@ -18,7 +18,7 @@ const Header = () => {
 
     const dispatch = useDispatch();
 
-    const { user } = useSelector((state) => state);
+    const { user, cart } = useSelector((state) => ({...state}));
 
 
     const [current, setCurrent] = useState("home");
@@ -42,6 +42,12 @@ const Header = () => {
 
             <Item key="shop" icon={<ShoppingOutlined />} >
                 <Link to="/shop"> Shop </Link>
+            </Item>
+
+            <Item key="cart" icon={<ShoppingCartOutlined />} >
+                <Link to="/cart"> 
+                   <Badge count={cart.length} offset={[9,0]}>Cart</Badge>
+                </Link>
             </Item>
 
             {user && (
